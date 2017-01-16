@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace MatchmakingTestFramework
 {
-   public partial class Form1 : Form
+   public partial class frmMatchmakingTestDialog : Form
    {
-      public Form1()
+      public frmMatchmakingTestDialog()
       {
          InitializeComponent();
       }

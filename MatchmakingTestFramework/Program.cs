@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MatchmakingTestFramework.Player;
+using MatchmakingTestFramework.Utils;
 
 namespace MatchmakingTestFramework
 {
@@ -14,9 +16,15 @@ namespace MatchmakingTestFramework
       [STAThread]
       static void Main()
       {
+         RandHelper.Initialize();
+         PlayerListManager.Initialize();
+
+
+         PlayerClientManager.Initialize(512);
+
          Application.EnableVisualStyles();
          Application.SetCompatibleTextRenderingDefault(false);
-         Application.Run(new Form1());
+         Application.Run(new frmMatchmakingTestDialog());
       }
    }
 }
