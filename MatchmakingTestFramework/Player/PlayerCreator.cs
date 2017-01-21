@@ -9,7 +9,7 @@ namespace MatchmakingTestFramework.Player
 {
    static class PlayerCreator
    {
-      public static ushort MaximumPartySize = 5;
+      public static ushort MaximumPartySize { get; set; } = 5;
 
       public static List<Player> CreatePlayerGroup()
       {

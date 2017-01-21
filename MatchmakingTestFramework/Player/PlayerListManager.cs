@@ -9,11 +9,11 @@ namespace MatchmakingTestFramework.Player
 {
    static class PlayerListManager
    {
-      private static Dictionary<long, PlayerGroup> ConnectedPartiesOfPlayers;
+      private static Dictionary<long, PlayerGroup> mConnectedPartiesOfPlayers;
 
       public static void Initialize()
       {
-         ConnectedPartiesOfPlayers = new Dictionary<long, PlayerGroup>();
+         mConnectedPartiesOfPlayers = new Dictionary<long, PlayerGroup>();
       }
 
       public static void AddGroups(int count)
@@ -21,7 +21,7 @@ namespace MatchmakingTestFramework.Player
          for (int i = 0; i < count; i++)
          {
             PlayerGroup grp = new PlayerGroup(PlayerCreator.CreatePlayerGroup());
-            ConnectedPartiesOfPlayers.Add(grp.ID, grp);
+            mConnectedPartiesOfPlayers.Add(grp.ID, grp);
          }
       }
 
@@ -29,25 +29,25 @@ namespace MatchmakingTestFramework.Player
       {
          get
          {
-            return ConnectedPartiesOfPlayers.Count;
+            return mConnectedPartiesOfPlayers.Count;
          }
       }
 
       public static int GroupCountInState(GroupState state)
       {
-         return ConnectedPartiesOfPlayers.Count(x => x.Value.State == state);
+         return mConnectedPartiesOfPlayers.Count(x => x.Value.State == state);
       }
 
       public static List<PlayerGroup> GroupListInState(GroupState state)
       {
-         return ConnectedPartiesOfPlayers.Where(x => x.Value.State == state).Select(x => x.Value).ToList();
+         return mConnectedPartiesOfPlayers.Where(x => x.Value.State == state).Select(x => x.Value).ToList();
       }
 
       public static void ModifyGroupState(long groupID, GroupState state)
       {
-         if (ConnectedPartiesOfPlayers.ContainsKey(groupID) == true)
+         if (mConnectedPartiesOfPlayers.ContainsKey(groupID) == true)
          {
-            ConnectedPartiesOfPlayers[groupID].State = state;
+            mConnectedPartiesOfPlayers[groupID].State = state;
          }
       }
 
@@ -55,13 +55,13 @@ namespace MatchmakingTestFramework.Player
       {
          get
          {
-            return ConnectedPartiesOfPlayers.Select(x => x.Value).ToList();
+            return mConnectedPartiesOfPlayers.Select(x => x.Value).ToList();
          }
       }
 
       public static void RemoveExistingGroup(long groupID)
       {
-         ConnectedPartiesOfPlayers.Remove(groupID);
+         mConnectedPartiesOfPlayers.Remove(groupID);
       }
    }
 }

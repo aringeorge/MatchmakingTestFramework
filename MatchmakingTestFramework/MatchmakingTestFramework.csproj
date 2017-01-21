@@ -46,12 +46,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Database\PlayerDatabase.cs" />
+    <Compile Include="Database\PlayerGameHistory.cs" />
+    <Compile Include="Matchmaker\Matchmaker.cs" />
+    <Compile Include="Matchmaker\MatchmakingManager.cs" />
     <Compile Include="frmMatchmakingTestDialog.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmMatchmakingTestDialog.Designer.cs">
       <DependentUpon>frmMatchmakingTestDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Matchmaker\MatchmakingRating.cs" />
     <Compile Include="Player\Player.cs" />
     <Compile Include="Player\PlayerClientManager.cs" />
     <Compile Include="Player\PlayerListManager.cs" />
@@ -85,11 +90,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Database\" />
-    <Folder Include="GamePlayer\" />
-    <Folder Include="Matchmaker\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

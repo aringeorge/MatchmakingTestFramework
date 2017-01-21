@@ -10,42 +10,44 @@ namespace MatchmakingTestFramework.Player
 {
    static class PlayerClientManager
    {
-      private static Thread PlayerCreatorThread;
-      private static Thread PlayerDestroyThread;
-      private static Thread PlayerStartMatchmakeThread;
-      private static int MaximumGroupsInPlayerList;
-      private static bool Running;
+      private static Thread mPlayerCreatorThread;
+      private static Thread mPlayerDestroyThread;
+      private static Thread mPlayerStartMatchmakeThread;
+      private static int mMaximumGroupsInPlayerList;
+      private static bool mRunning;
 
       public static void Initialize(int numGroups)
       {
-         MaximumGroupsInPlayerList = numGroups;
+         mMaximumGroupsInPlayerList = numGroups;
 
-         Running = true;
+         mRunning = true;
 
-         PlayerCreatorThread = new Thread(PlayerCreation);
-         PlayerDestroyThread = new Thread(PlayerDestruction);
-         PlayerStartMatchmakeThread = new Thread(PlayerMatchmakingStartThread);
-         PlayerDestroyThread.Start();
-         PlayerCreatorThread.Start();
-         PlayerStartMatchmakeThread.Start();
+         mPlayerCreatorThread = new Thread(PlayerCreation);
+         mPlayerDestroyThread = new Thread(PlayerDestruction);
+         mPlayerStartMatchmakeThread = new Thread(PlayerMatchmakingStartThread);
+         mPlayerDestroyThread.Start();
+         mPlayerCreatorThread.Start();
+         mPlayerStartMatchmakeThread.Start();
       }
 
       public static void Shutdown()
       {
-         Running = false;
-         PlayerCreatorThread.Join();
-         PlayerDestroyThread.Join();
-         PlayerStartMatchmakeThread.Join();
+         mRunning = false;
+         mPlayerCreatorThread.Join();
+         mPlayerDestroyThread.Join();
+         mPlayerStartMatchmakeThread.Join();
       }
 
       // match maker runs a thread that gets all players in the matchmaking state,
-         // gets their mmr from the database system and tries to make two groups of PlayerCreator.MaximumPartySize with them and set the state to playing game
+      // gets their mmr from the database system and tries to make two groups of PlayerCreator.MaximumPartySize with them and set the state to playing game
       // then then the game player will do a win / loss and calculate the mmr for the players
-         // then the game player will save the players mmr into the database and set the state to disconnected
+      // then the game player will save the players mmr and the timing information into a separate database
+      // then the game player will set the state to disconnected
+
 
       private static void PlayerMatchmakingStartThread()
       {
-         while (Running == true)
+         while (mRunning == true)
          {
             List<PlayerGroup> groupListInState = PlayerListManager.GroupListInState(GroupState.Connected);
             if (groupListInState.Count > 0)
@@ -64,7 +66,7 @@ namespace MatchmakingTestFramework.Player
 
       private static void PlayerDestruction()
       {
-         while (Running == true)
+         while (mRunning == true)
          {
             List<long> groupIDs = PlayerListManager.GroupListInState(GroupState.Disconnected).Select(x => x.ID).ToList();
             if ((groupIDs != null) && (groupIDs.Count > 0))
@@ -80,12 +82,12 @@ namespace MatchmakingTestFramework.Player
 
       private static void PlayerCreation()
       {
-         while (Running == true)
+         while (mRunning == true)
          {
             int totalGroupCount = PlayerListManager.TotalGroupCount;
-            if (totalGroupCount < MaximumGroupsInPlayerList)
+            if (totalGroupCount < mMaximumGroupsInPlayerList)
             {
-               int groupsToConnect = RandHelper.Rand16() % (MaximumGroupsInPlayerList - totalGroupCount) + 1;
+               int groupsToConnect = RandHelper.Rand16() % (mMaximumGroupsInPlayerList - totalGroupCount) + 1;
                PlayerListManager.AddGroups(groupsToConnect);
             }
             Thread.Sleep(1000);

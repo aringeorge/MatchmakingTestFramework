@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MatchmakingTestFramework.Database;
+using MatchmakingTestFramework.Matchmaker;
 using MatchmakingTestFramework.Player;
 using MatchmakingTestFramework.Utils;
 
@@ -18,7 +20,8 @@ namespace MatchmakingTestFramework
       {
          RandHelper.Initialize();
          PlayerListManager.Initialize();
-
+         MatchmakingManager.Initialize();
+         PlayerDatabase.Initialize();
 
          PlayerClientManager.Initialize(512);
 
