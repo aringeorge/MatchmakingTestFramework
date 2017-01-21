@@ -23,7 +23,7 @@ namespace MatchmakingTestFramework.Database
          {
             return mMatchmakingPlayerDictionary[playerId];
          }
-         return new MatchmakingRating() { Rating = MatchmakingManager.INITIAL_MATCHMAKING_RATING; }
+         return new MatchmakingRating() { Rating = MatchmakingManager.INITIAL_MATCHMAKING_RATING };
       }
    }
 }
